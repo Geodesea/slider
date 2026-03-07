@@ -1,0 +1,48 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>Image Comparison</title>
+  <style>
+    body { margin: 0; padding: 0; display:flex; justify-content:center; align-items:center; height:100vh; background:#111; }
+    .compare {
+      position: relative;
+      width: 100%;
+      max-width: 800px;
+      display: grid;
+      --pos: 50%;
+    }
+    .compare > * { grid-area: 1 / 1; }
+    .img { width: 100%; height: auto; object-fit: cover; }
+    .before { mask: linear-gradient(to right, black 0, var(--pos), transparent 0); }
+    .after  { mask: linear-gradient(to right, transparent 0, var(--pos), black 0); }
+    .slider {
+      width: 100%;
+      appearance: none;
+      background: transparent;
+      z-index: 1;
+      cursor: pointer;
+    }
+    .slider::-webkit-slider-thumb,
+    .slider::-moz-range-thumb {
+      width: 12px; height: 40px;
+      background: #fff; border: 2px solid #000;
+    }
+  </style>
+</head>
+<body>
+  <div class="compare">
+    <img src="before.jpg" class="img before" alt="Before">
+    <img src="after.jpg"  class="img after"  alt="After">
+    <input type="range" min="0" max="100" value="50" class="slider">
+  </div>
+
+  <script>
+    const wrapper = document.querySelector('.compare');
+    const range   = wrapper.querySelector('.slider');
+    range.addEventListener('input', e => {
+      wrapper.style.setProperty('--pos', e.target.value + '%');
+    });
+  </script>
+</body>
+</html>
